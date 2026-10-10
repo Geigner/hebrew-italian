@@ -434,7 +434,7 @@
             const inputAreaBox = document.getElementById('input-area-box');
             const connectionBadge = document.getElementById('connection-badge');
             const typingStatus = document.getElementById('typing-status');
-            const roomDocRef = doc(db, "rooms-italian", roomId);
+            const roomDocRef = doc(db, "rooms", roomId);
 
             onSnapshot(roomDocRef, (docSnap) => {
                 connectionBadge.innerHTML = '🟢 מחובר לענן';
@@ -465,7 +465,7 @@
                 connectionBadge.innerHTML = '🔴 בעיית חיבור';
             });
 
-            const messagesRef = collection(db, "rooms-italian", roomId, "messages");
+            const messagesRef = collection(db, "rooms", roomId, "messages");
             const q = query(messagesRef, orderBy("timestamp", "asc"));
 
             onSnapshot(q, (snapshot) => {
@@ -657,7 +657,7 @@
                 }
                 
                 try {
-                    const roomDocRef = doc(db, "rooms-italian", roomName);
+                    const roomDocRef = doc(db, "rooms", roomName);
                     await setDoc(roomDocRef, { 
                         createdAt: serverTimestamp(),
                         roomName: roomName 
@@ -692,7 +692,7 @@
                 container.innerHTML = '<p style="color: #64748b; font-size: 0.9rem;">טוען חדרים מהענן...</p>';
 
                 try {
-                    const roomsSnapshot = await getDocs(collection(db, "rooms-italian"));
+                    const roomsSnapshot = await getDocs(collection(db, "rooms"));
                     container.innerHTML = '';
 
                     if (roomsSnapshot.empty) {
@@ -730,7 +730,7 @@
             window.resetRoomMessages = async function(roomDocId) {
                 if (confirm(`האם אתה בטוח שברצונך לאפס את השיחה בחדר "${roomDocId}"? כל ההודעות הקודמות יימחקו, אך הקישור יישאר פעיל.`)) {
                     try {
-                        const messagesRef = collection(db, "rooms-italian", roomDocId, "messages");
+                        const messagesRef = collection(db, "rooms", roomDocId, "messages");
                         const snapshot = await getDocs(messagesRef);
                         
                         const batch = writeBatch(db);
@@ -750,7 +750,7 @@
             window.deleteRoom = async function(roomDocId) {
                 if (confirm(`האם אתה בטוח שברצונך למחוק את החדר "${roomDocId}" וכל ההיסטוריה שלו?`)) {
                     try {
-                        await deleteDoc(doc(db, "rooms-italian", roomDocId));
+                        await deleteDoc(doc(db, "rooms", roomDocId));
                         alert("החדר נמחק בהצלחה!");
                         loadActiveRooms();
                     } catch (e) {
