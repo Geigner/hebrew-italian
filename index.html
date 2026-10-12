@@ -164,7 +164,7 @@
             background-color: #f1f5f9;
             -webkit-overflow-scrolling: touch;
         }
-        .message {
+    .message {
             max-width: 88%;
             padding: 10px 14px;
             border-radius: 12px;
@@ -173,9 +173,11 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             position: relative;
             cursor: pointer;
-            user-select: none;
-        }
-        .message.hebrew {
+            user-select: text;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+        }        .message.hebrew {
             align-self: flex-start;
             background-color: #ffffff;
             border-right: 5px solid var(--secondary-color);
